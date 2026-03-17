@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 function Lightbox({ images, currentIndex, onClose, onPrev, onNext }) {
   const closeButtonRef = useRef(null);
@@ -45,7 +46,7 @@ function Lightbox({ images, currentIndex, onClose, onPrev, onNext }) {
 
   const image = images[currentIndex];
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black"
       role="dialog"
@@ -94,15 +95,12 @@ function Lightbox({ images, currentIndex, onClose, onPrev, onNext }) {
         </svg>
       </button>
 
-      {/* Image container */}
+      {/* Image container - fits in screen */}
       <div
-        className="flex h-full w-full items-center justify-center p-4 pt-20 pb-24 sm:p-8 sm:pt-24 sm:pb-28"
+        className="absolute top-16 bottom-20 left-14 right-14 flex items-center justify-center sm:left-20 sm:right-20"
         onClick={function (e) {
           if (e.target === e.currentTarget) onClose();
         }}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
       >
         <img
           key={image.id}
@@ -118,7 +116,8 @@ function Lightbox({ images, currentIndex, onClose, onPrev, onNext }) {
         <h3 className="font-serif text-lg text-white sm:text-xl">{image.title}</h3>
         <p className="mt-1 text-sm text-white/70">{image.category}</p>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
