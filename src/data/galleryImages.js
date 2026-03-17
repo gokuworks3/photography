@@ -36,7 +36,7 @@ const galleryImages = [
     title: 'First Dance',
     category: 'Wedding',
     image:
-      'https://images.unsplash.com/photo-1513278974582-3e1b4a4fa21a?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80',
     alt: 'Bride and groom dancing under warm reception lights.'
   },
   {
@@ -100,7 +100,7 @@ const galleryImages = [
     title: 'Ceremony Bloom',
     category: 'Wedding',
     image:
-      'https://images.unsplash.com/photo-1529635436167-b5f9e7a9f5f6?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80',
     alt: 'Wedding ceremony setup with flowers and wooden arch.'
   },
   {
