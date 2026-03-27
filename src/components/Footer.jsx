@@ -20,9 +20,9 @@ function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-auto overflow-hidden border-t border-neutral-200 bg-white">
-      <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gold/5 blur-3xl" />
-      <div className="absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-gold/5 blur-3xl" />
+    <footer className="relative mt-auto overflow-hidden border-t border-neutral-200 bg-gradient-to-br from-ivory via-white to-gold/10">
+      <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gold/10 blur-3xl animate-footer-float" />
+      <div className="absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-gold/10 blur-3xl animate-footer-float2" />
 
       <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">

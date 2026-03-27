@@ -7,7 +7,9 @@ import TestimonialSlider from '../components/TestimonialSlider';
 import galleryImages from '../data/galleryImages';
 import services from '../data/services';
 
-const featuredImages = galleryImages.slice(0, 8);
+const featuredImages = galleryImages.filter(function (img) {
+  return img.id !== 2;
+}).slice(0, 8);
 
 function HomePage() {
   const navigate = useNavigate();

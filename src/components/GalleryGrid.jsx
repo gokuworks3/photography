@@ -10,6 +10,7 @@ function GalleryGrid({ images, onImageClick }) {
             item={item}
             index={index}
             onImageClick={onImageClick}
+            fadeInDelay={index * 80}
           />
         );
       })}
@@ -17,7 +18,7 @@ function GalleryGrid({ images, onImageClick }) {
   );
 }
 
-function GalleryItem({ item, index, onImageClick }) {
+function GalleryItem({ item, index, onImageClick, fadeInDelay }) {
   const [loaded, setLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -42,8 +43,9 @@ function GalleryItem({ item, index, onImageClick }) {
         onBlur={function () {
           setIsHovered(false);
         }}
-        className="group relative w-full overflow-hidden rounded-2xl bg-neutral-100 shadow-card transition-all duration-500 hover:-translate-y-1 hover:shadow-card-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 sm:rounded-3xl"
+        className="group relative w-full overflow-hidden rounded-2xl bg-neutral-100 shadow-card transition-all duration-500 hover:-translate-y-1 hover:shadow-card-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 sm:rounded-3xl fade-in-gallery"
         aria-label={'Open image: ' + item.title}
+        style={{ animationDelay: loaded ? fadeInDelay + 'ms' : '0ms' }}
       >
         <div className={[
           'aspect-auto transition-all duration-500',
@@ -59,19 +61,19 @@ function GalleryItem({ item, index, onImageClick }) {
             className={[
               'h-auto w-full object-cover transition-all duration-700',
               loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105',
-              isHovered ? 'scale-110' : 'scale-100'
+              isHovered ? 'scale-110 rotate-1 saturate-150' : 'scale-100'
             ].join(' ')}
           />
         </div>
 
         <div className={[
-          'absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500',
+          'absolute inset-0 bg-gradient-to-t from-gold/60 via-black/20 to-transparent transition-opacity duration-500',
           isHovered ? 'opacity-100' : 'opacity-0'
         ].join(' ')} />
 
         <div className={[
           'absolute inset-0 flex flex-col justify-end p-4 text-left text-white transition-all duration-500 sm:p-5',
-          isHovered ? 'opacity-100' : 'opacity-0'
+          isHovered ? 'opacity-100' : 'opacity-70'
         ].join(' ')}>
           <div
             className="transition-transform duration-500"

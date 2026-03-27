@@ -4,15 +4,21 @@ import { Link } from 'react-router-dom';
 const heroImages = [
   {
     url: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=2000&q=80',
-    alt: 'Wedding couple in dramatic evening light'
+    alt: 'Wedding couple in dramatic evening light',
+    zoom: 1.04,
+    position: 'center center'
   },
   {
     url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=80',
-    alt: 'Elegant wedding portrait'
+    alt: 'Elegant wedding portrait',
+    zoom: 1,
+    position: 'center 30%'
   },
   {
     url: 'https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=2000&q=80',
-    alt: 'Romantic couple moment'
+    alt: 'Romantic couple moment',
+    zoom: 1.03,
+    position: 'center center'
   }
 ];
 
@@ -81,7 +87,7 @@ function Hero() {
   }
 
   const parallaxOffset = scrollY * 0.5;
-  const contentOpacity = Math.max(0, 1 - scrollY / 500);
+  const contentOpacity = Math.max(0.88, 1 - scrollY / 700);
   const contentTranslate = scrollY * 0.3;
   const imageTranslateX = (mousePosition.x - 0.5) * 20;
   const imageTranslateY = (mousePosition.y - 0.5) * 20;
@@ -100,7 +106,7 @@ function Hero() {
               index === currentImage ? 'opacity-100' : 'opacity-0'
             ].join(' ')}
             style={{
-              transform: `translateY(${parallaxOffset}px) translate3d(${imageTranslateX}px, ${imageTranslateY}px, 0) scale(1.15)`
+              transform: `translateY(${parallaxOffset}px) translate3d(${imageTranslateX}px, ${imageTranslateY}px, 0) scale(${image.zoom})`
             }}
           >
             <img
@@ -110,6 +116,7 @@ function Hero() {
                 'h-full w-full object-cover transition-all duration-1000',
                 loaded ? 'scale-100' : 'scale-110'
               ].join(' ')}
+              style={{ objectPosition: image.position }}
               loading={index === 0 ? 'eager' : 'lazy'}
               onLoad={index === 0 ? function () { setLoaded(true); } : undefined}
             />
@@ -120,7 +127,9 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
 
-      <div className="pointer-events-none absolute inset-0">
+
+      {/* Animated Sparkles Overlay */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div
           className="absolute h-[600px] w-[600px] rounded-full bg-gold/20 blur-[120px]"
           style={{
@@ -129,12 +138,35 @@ function Hero() {
             transform: 'translate(-50%, -50%)'
           }}
         />
+        {/* Sparkles */}
+        {[...Array(12)].map((_, i) => {
+          const size = Math.random() * 8 + 6;
+          const left = Math.random() * 100;
+          const top = Math.random() * 100;
+          const delay = Math.random() * 3;
+          const duration = 3 + Math.random() * 3;
+          return (
+            <span
+              key={i}
+              className="absolute rounded-full bg-white/35 shadow-sm animate-sparkle"
+              style={{
+                width: size,
+                height: size,
+                left: `${left}%`,
+                top: `${top}%`,
+                animationDelay: `${delay}s`,
+                animationDuration: `${duration}s`,
+                opacity: 0.2 + Math.random() * 0.2
+              }}
+            />
+          );
+        })}
       </div>
 
       <div className="absolute -bottom-40 left-1/4 h-96 w-96 animate-pulse rounded-full bg-gold/15 blur-3xl" />
-      <div className="absolute -top-20 right-1/4 h-80 w-80 animate-pulse rounded-full bg-white/10 blur-3xl" style={{ animationDelay: '1s' }} />
+      <div className="absolute -top-20 right-1/4 h-80 w-80 animate-pulse rounded-full bg-white/5 blur-3xl" style={{ animationDelay: '1s' }} />
       <div className="absolute bottom-1/3 right-16 h-40 w-40 rounded-full bg-gold/25 blur-2xl floating" />
-      <div className="absolute left-16 top-1/3 h-32 w-32 rounded-full bg-white/10 blur-2xl floating" style={{ animationDelay: '2s' }} />
+      <div className="absolute left-16 top-1/3 h-32 w-32 rounded-full bg-white/5 blur-2xl floating" style={{ animationDelay: '2s' }} />
 
       <div className="absolute left-8 top-1/2 hidden -translate-y-1/2 flex-col gap-3 lg:flex">
         {heroImages.map(function (_, index) {
@@ -153,15 +185,17 @@ function Hero() {
       </div>
 
       <div
-        className="relative z-10 mx-auto w-full max-w-6xl px-5 pt-20 text-center sm:px-8"
+        className="relative z-20 mx-auto w-full max-w-6xl px-5 pt-20 text-center sm:px-8"
         style={{
           opacity: contentOpacity,
           transform: `translateY(${contentTranslate}px)`
         }}
       >
+        <div className="pointer-events-none absolute inset-x-4 top-8 h-[72%] rounded-[2.5rem] bg-black/35 blur-3xl sm:inset-x-10" />
+
         <div
           className={[
-            'transition-all duration-1000',
+            'relative z-10 transition-all duration-1000',
             loaded ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           ].join(' ')}
           style={{ transitionDelay: '400ms' }}
@@ -171,7 +205,7 @@ function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
             </span>
-            <span className="text-xs font-medium uppercase tracking-[0.35em] text-white/95">
+            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-white" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.55)' }}>
               Award-Winning Photography
             </span>
           </span>
@@ -179,12 +213,12 @@ function Hero() {
 
         <h1
           className={[
-            'mt-10 transition-all duration-1000',
+            'relative z-10 mt-10 transition-all duration-1000',
             loaded ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           ].join(' ')}
           style={{ transitionDelay: '600ms' }}
         >
-          <span className="block font-serif text-5xl font-semibold leading-[1.1] tracking-wide xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl">
+          <span className="block font-serif text-5xl font-semibold leading-[1.1] tracking-wide text-white drop-shadow-[0_8px_30px_rgba(0,0,0,0.65)] xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl">
             Alex
             <span className="relative mx-4 inline-block">
               <span className="text-gold">Monroe</span>
@@ -204,10 +238,13 @@ function Hero() {
 
         <p
           className={[
-            'mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-white/90 transition-all duration-1000 sm:text-xl md:text-2xl',
+            'relative z-10 mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-white transition-all duration-1000 sm:text-xl md:text-2xl',
             loaded ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           ].join(' ')}
-          style={{ transitionDelay: '800ms' }}
+          style={{
+            transitionDelay: '800ms',
+            textShadow: '0 4px 18px rgba(0,0,0,0.55)'
+          }}
         >
           Capturing Timeless Moments with
           <span className="font-serif italic text-gold"> Artistic Elegance</span>
@@ -215,17 +252,20 @@ function Hero() {
 
         <p
           className={[
-            'mx-auto mt-4 max-w-xl text-sm text-white/60 transition-all duration-1000 sm:text-base',
+            'relative z-10 mx-auto mt-4 max-w-xl text-sm text-white/90 transition-all duration-1000 sm:text-base',
             loaded ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           ].join(' ')}
-          style={{ transitionDelay: '900ms' }}
+          style={{
+            transitionDelay: '900ms',
+            textShadow: '0 3px 14px rgba(0,0,0,0.5)'
+          }}
         >
           Specializing in Weddings, Portraits, and Lifestyle Photography
         </p>
 
         <div
           className={[
-            'mt-12 flex flex-col items-center justify-center gap-4 transition-all duration-1000 sm:flex-row sm:gap-6 md:mt-16',
+            'relative z-10 mt-12 flex flex-col items-center justify-center gap-4 transition-all duration-1000 sm:flex-row sm:gap-6 md:mt-16',
             loaded ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           ].join(' ')}
           style={{ transitionDelay: '1000ms' }}
@@ -271,7 +311,7 @@ function Hero() {
 
         <div
           className={[
-            'mt-20 grid grid-cols-3 gap-4 transition-all duration-1000 sm:gap-8 md:mt-24',
+            'relative z-10 mt-20 grid grid-cols-3 gap-4 rounded-3xl bg-black/35 px-4 py-4 backdrop-blur-sm transition-all duration-1000 sm:gap-8 sm:px-8 sm:py-6 md:mt-24',
             loaded ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           ].join(' ')}
           style={{ transitionDelay: '1200ms' }}
@@ -284,7 +324,7 @@ function Hero() {
             return (
               <div key={stat.label} className="group relative text-center">
                 <div className="absolute -inset-4 rounded-2xl bg-white/5 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100" />
-                <p className="relative font-serif text-3xl text-white sm:text-4xl md:text-5xl">
+                <p className="relative font-serif text-3xl text-white drop-shadow-[0_6px_18px_rgba(0,0,0,0.6)] sm:text-4xl md:text-5xl">
                   {stat.number.split('').map(function (char, i) {
                     return (
                       <span
@@ -297,7 +337,7 @@ function Hero() {
                     );
                   })}
                 </p>
-                <p className="relative mt-2 text-[10px] uppercase tracking-[0.2em] text-white/50 sm:text-xs">
+                <p className="relative mt-2 text-[10px] uppercase tracking-[0.2em] text-white/80 sm:text-xs">
                   {stat.label}
                 </p>
               </div>
@@ -324,7 +364,7 @@ function Hero() {
         </button>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-ivory via-ivory/50 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-ivory/10 to-transparent" />
 
       <div className="absolute bottom-6 right-8 hidden items-center gap-3 text-xs text-white/40 lg:flex">
         <span className="uppercase tracking-[0.2em]">Follow</span>

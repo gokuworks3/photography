@@ -61,8 +61,8 @@ function Navbar() {
     'fixed inset-x-0 top-0 z-50 transition-all duration-500 safe-top',
     hidden && !menuOpen ? '-translate-y-full' : 'translate-y-0',
     isHomeTop
-      ? 'bg-transparent text-white'
-      : 'glass border-b border-neutral-200/50 text-charcoal shadow-sm'
+      ? 'bg-gradient-to-b from-black/60 via-black/20 to-transparent text-white backdrop-blur-xl shadow-lg'
+      : 'glass border-b border-neutral-200/50 text-charcoal shadow-xl backdrop-blur-xl'
   ].join(' ');
 
   function getNavLinkClass(isActive) {
@@ -98,8 +98,8 @@ function Navbar() {
             <span className="relative">
               Alex Monroe
               <span
-                className={[
-                  'absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-500 group-hover:w-full',
+                className={[...
+                  'absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-500 group-hover:w-full animate-navbar-underline',
                   isHomeTop ? 'bg-white' : 'bg-gold'
                 ].join(' ')}
               />

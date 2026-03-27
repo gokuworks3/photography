@@ -1,3 +1,56 @@
+@keyframes navbar-underline {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+.animate-navbar-underline {
+  animation: navbar-underline 1s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+@keyframes footer-float {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+.animate-footer-float {
+  animation: footer-float 6s ease-in-out infinite;
+}
+.animate-footer-float2 {
+  animation: footer-float 7s ease-in-out infinite;
+  animation-delay: 2s;
+}
+@keyframes fadeInGallery {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.fade-in-gallery {
+  opacity: 0;
+  animation: fadeInGallery 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes sparkle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle linear infinite;
+}
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
 @tailwind base;
